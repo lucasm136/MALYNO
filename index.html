@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MALYNO – Outils gratuits pour tous</title>
+<style>
+:root{--v:#7c3aed;--b:#2563eb;--o:#f97316;--g:#16a34a;--bg:#f8f7ff;--tx:#1e1b4b;--mu:#6b7280}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--tx);line-height:1.5}
+button{font:inherit;cursor:pointer;border:0}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 5%;background:#fff;position:sticky;top:0;z-index:5;box-shadow:0 2px 12px #7c3aed18}
+.logo{display:flex;align-items:center;gap:10px;font-weight:900;font-size:1.4rem;letter-spacing:1px;text-decoration:none;color:var(--tx)}
+.logo i{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;color:#fff;font-style:normal;background:linear-gradient(135deg,var(--v),var(--b))}
+nav a{margin-left:18px;text-decoration:none;color:var(--tx);font-weight:600}
+nav a:hover{color:var(--v)}
+.hero{position:relative;overflow:hidden;text-align:center;color:#fff;padding:70px 5% 90px;background:linear-gradient(135deg,var(--v),var(--b) 60%,#0ea5e9)}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(10px);animation:float 8s ease-in-out infinite}
+.hero:before{width:220px;height:220px;background:var(--o);opacity:.45;left:-60px;top:20px}
+.hero:after{width:260px;height:260px;background:var(--g);opacity:.4;right:-70px;bottom:-60px;animation-delay:-4s}
+@keyframes float{50%{transform:translateY(25px) scale(1.08)}}
+.hero h1{position:relative;font-size:clamp(2rem,5vw,3.4rem);line-height:1.15;max-width:760px;margin:0 auto 14px}
+.hero p{position:relative;font-size:1.15rem;opacity:.95;margin-bottom:28px}
+.search{position:relative;max-width:560px;margin:auto}
+.search input{width:100%;padding:17px 22px 17px 52px;border-radius:50px;border:0;font-size:1.05rem;box-shadow:0 10px 30px #0004;outline:0}
+.search span{position:absolute;left:20px;top:50%;transform:translateY(-50%);font-size:1.2rem}
+main{max-width:1100px;margin:auto;padding:0 5%}
+h2{font-size:1.6rem;margin:44px 0 18px}
+.cats,.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.cats{margin-top:-50px;position:relative}
+.cat{background:#fff;border-radius:20px;padding:22px;text-align:left;border-top:6px solid var(--c);box-shadow:0 8px 24px #1e1b4b14;transition:.25s;animation:up .6s both}
+.cat:hover,.cat.on{transform:translateY(-6px);box-shadow:0 14px 30px color-mix(in srgb,var(--c) 35%,transparent)}
+.cat.on{background:color-mix(in srgb,var(--c) 10%,#fff)}
+.cat b{display:block;font-size:1.15rem;margin:6px 0 2px;color:var(--c)}
+.cat small{color:var(--mu)}
+.ico{font-size:2rem}
+.tool{background:#fff;border-radius:18px;padding:20px;text-align:left;border-left:6px solid var(--c);box-shadow:0 6px 18px #1e1b4b10;transition:.25s;animation:up .5s both}
+.tool:hover{transform:translateY(-5px) rotate(-.4deg);box-shadow:0 12px 26px color-mix(in srgb,var(--c) 30%,transparent)}
+.tool b{display:block;margin:6px 0 3px}.tool small{color:var(--mu)}
+.tag{display:inline-block;font-size:.75rem;font-weight:700;color:#fff;background:var(--c);padding:2px 10px;border-radius:20px;margin-top:8px}
+@keyframes up{from{opacity:0;transform:translateY(18px)}}
+.reset{background:var(--o);color:#fff;padding:8px 18px;border-radius:30px;font-weight:700;margin-left:10px;display:none}
+.empty{color:var(--mu);padding:20px 0}
+footer{margin-top:60px;background:var(--tx);color:#ddd;text-align:center;padding:30px 5%}
+footer button{background:none;color:#fff;text-decoration:underline;margin:0 12px;font-size:1rem}
+dialog{border:0;border-radius:22px;width:min(560px,94vw);padding:0;box-shadow:0 20px 60px #0006;margin:auto;max-height:92vh;overflow:auto}
+dialog::backdrop{background:#1e1b4b99;backdrop-filter:blur(3px)}
+dialog[open]{animation:up .3s}
+.dh{display:flex;justify-content:space-between;align-items:center;padding:16px 22px;color:#fff;background:var(--c,var(--v))}
+.dh h3{font-size:1.2rem}
+.dh button{background:#fff3;color:#fff;width:34px;height:34px;border-radius:50%;font-size:1.1rem}
+.db{padding:22px}
+.db label{display:block;font-weight:600;font-size:.92rem;margin-bottom:12px}
+.db input,.db select,.db textarea{width:100%;margin-top:5px;padding:11px 13px;border:2px solid #e5e7eb;border-radius:12px;font:inherit;outline:0}
+.db input:focus,.db select:focus,.db textarea:focus{border-color:var(--c,var(--v))}
+.db input[type=range]{padding:0;accent-color:var(--c)}
+.db .chk{display:inline-block;margin-right:14px;font-weight:500}.db .chk input{width:auto;margin-right:5px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.go{background:var(--c,var(--v));color:#fff;padding:12px 24px;border-radius:30px;font-weight:700;margin-top:4px;transition:.2s}
+.go:hover{transform:scale(1.04)}
+.r{margin-top:16px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:9px 14px;background:#f5f3ff;border-radius:10px;margin-top:6px}
+.row.big{background:var(--c,var(--v));color:#fff;font-size:1.1rem}
+.err{color:#dc2626;font-weight:600}
+.note{font-size:.82rem;color:var(--mu);margin-top:10px}
+.bar{height:12px;background:#e5e7eb;border-radius:8px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:var(--g);transition:width .6s}
+hr{border:0;border-top:2px dashed #e5e7eb;margin:20px 0}
+@media(max-width:560px){nav{display:none}.two{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <a class="logo" href="#"><i>M</i>MALYNO</a>
+  <nav><a href="#categories">Catégories</a><a href="#outils">Outils</a></nav>
+</header>
+
+<section class="hero">
+  <h1>Tous vos outils du quotidien, gratuits et sans inscription</h1>
+  <p>Calculez, budgétisez, convertissez et sécurisez en quelques clics.</p>
+  <div class="search"><span>🔍</span><input id="q" type="search" placeholder="Rechercher un outil (ex : TVA, mot de passe…)" autocomplete="off"></div>
+</section>
+
+<main>
+  <div class="cats" id="categories"></div>
+  <h2 id="outils"><span id="lt">Outils populaires</span><button class="reset" id="reset">Tout afficher ✕</button></h2>
+  <div class="grid" id="list"></div>
+</main>
+
+<footer>
+  <p><b>MALYNO</b> – Outils gratuits pour tout le monde</p>
+  <p style="margin-top:10px"><button id="ml">Mentions légales</button><button id="ct">Contact</button></p>
+</footer>
+
+<dialog id="dlg"><div class="dh" id="dh"><h3 id="dt"></h3><button id="x" aria-label="Fermer">✕</button></div><div class="db" id="db"></div></dialog>
+
+<script>
+/* ---------- Petits outils ---------- */
+const $=(s,r=document)=>r.querySelector(s);
+const eur=n=>n.toLocaleString('fr-FR',{style:'currency',currency:'EUR'});
+const nb=(n,d=2)=>n.toLocaleString('fr-FR',{maximumFractionDigits:d});
+const val=id=>{const v=$('#'+id).value;return v===''?NaN:parseFloat(v)};
+const F=(id,l,x='')=>`<label>${l}<input id="${id}" type="number" step="any" ${x}></label>`;
+const S=(id,l,o)=>`<label>${l}<select id="${id}">${o.map(a=>`<option value="${a[0]}">${a[1]}</option>`).join('')}</select></label>`;
+const out=(id,h)=>$('#'+id).innerHTML=h;
+const res=rows=>rows.map(([a,b,g])=>`<div class="row${g?' big':''}"><span>${a}</span><b>${b}</b></div>`).join('');
+const err=m=>`<p class="err">${m}</p>`;
+const rnd=n=>{const r=new Uint32Array(1),lim=4294967296-4294967296%n;do crypto.getRandomValues(r);while(r[0]>=lim);return r[0]%n};
+const fmtDate=d=>d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric',timeZone:'UTC'});
+
+/* ---------- Catégories ---------- */
+const C=[
+ {id:'calc',name:'Calculateurs',icon:'🧮',c:'--v',desc:'TVA, pourcentage, salaire'},
+ {id:'argent',name:'Argent',icon:'💰',c:'--g',desc:'Budget mensuel et économies'},
+ {id:'quotidien',name:'Quotidien',icon:'📅',c:'--b',desc:'Dates, heures et conversions'},
+ {id:'pratique',name:'Outils pratiques',icon:'🛠️',c:'--o',desc:'Mots de passe et autres outils'}
+];
+
+/* ---------- Les outils ---------- */
+const T=[
+{id:'tva',cat:'calc',pop:1,icon:'🧾',name:'Calculateur de TVA',desc:'Passez du HT au TTC et inversement',kw:'taxe hors taxe ttc ht',
+ html:F('m','Montant (€)','min="0"')+`<div class="two">`+S('t','Taux de TVA',[[20,'20 % (normal)'],[10,'10 %'],[5.5,'5,5 %'],[2.1,'2,1 %']])+S('mode','Le montant est',[['ht','Hors taxe (HT)'],['ttc','Toutes taxes (TTC)']])+`</div><button class="go" id="go">Calculer</button><div class="r" id="r"></div>`,
+ init(){$('#go').onclick=()=>{const m=val('m'),t=+$('#t').value;if(isNaN(m)||m<0)return out('r',err('Entrez un montant valide.'));
+  const ht=$('#mode').value==='ht'?m:m/(1+t/100),ttc=ht*(1+t/100);out('r',res([['Montant HT',eur(ht)],['TVA ('+nb(t)+' %)',eur(ttc-ht)],['Montant TTC',eur(ttc),1]]))}}},
+
+{id:'pct',cat:'calc',pop:1,icon:'％',name:'Calculateur de pourcentage',desc:'Pourcentage d’un nombre, évolution, proportion',kw:'remise reduction augmentation',
+ html:`<b>1. X % de Y</b><div class="two" style="margin-top:8px">${F('a1','Pourcentage (%)')}${F('a2','De combien ?')}</div><button class="go" id="g1">Calculer</button><div class="r" id="r1"></div><hr>
+ <b>2. Évolution entre deux valeurs</b><div class="two" style="margin-top:8px">${F('b1','Valeur de départ')}${F('b2','Valeur d’arrivée')}</div><button class="go" id="g2">Calculer</button><div class="r" id="r2"></div><hr>
+ <b>3. A représente quel % de B ?</b><div class="two" style="margin-top:8px">${F('c1','Valeur A')}${F('c2','Total B')}</div><button class="go" id="g3">Calculer</button><div class="r" id="r3"></div>`,
+ init(){
+  $('#g1').onclick=()=>{const a=val('a1'),b=val('a2');out('r1',isNaN(a)||isNaN(b)?err('Remplissez les deux champs.'):res([[nb(a,4)+' % de '+nb(b,4),nb(a/100*b,4),1]]))};
+  $('#g2').onclick=()=>{const a=val('b1'),b=val('b2');out('r2',isNaN(a)||isNaN(b)?err('Remplissez les deux champs.'):a===0?err('La valeur de départ ne peut pas être 0.'):res([['Évolution',(b>=a?'+':'')+nb((b-a)/Math.abs(a)*100,2)+' %',1]]))};
+  $('#g3').onclick=()=>{const a=val('c1'),b=val('c2');out('r3',isNaN(a)||isNaN(b)?err('Remplissez les deux champs.'):b===0?err('Le total ne peut pas être 0.'):res([['Proportion',nb(a/b*100,2)+' %',1]]))}}},
+
+{id:'salaire',cat:'calc',pop:1,icon:'💼',name:'Salaire brut / net',desc:'Estimez votre salaire net à partir du brut',kw:'paie fiche de paie brut net',
+ html:F('br','Salaire brut mensuel (€)','min="0"')+S('st','Statut',[[22,'Non-cadre (≈ 22 %)'],[25,'Cadre (≈ 25 %)']])+F('tx','Taux de charges salariales (%) – modifiable','value="22" min="0" max="100"')+`<button class="go" id="go">Calculer</button><div class="r" id="r"></div><p class="note">Estimation avant impôt sur le revenu, basée sur un taux moyen de charges. Votre fiche de paie reste la référence.</p>`,
+ init(){$('#st').onchange=()=>$('#tx').value=$('#st').value;
+  $('#go').onclick=()=>{const b=val('br'),t=val('tx');if(isNaN(b)||isNaN(t)||b<0||t<0||t>100)return out('r',err('Entrez un brut et un taux valides.'));
+   const n=b*(1-t/100);out('r',res([['Net mensuel avant impôt',eur(n),1],['Net annuel (×12)',eur(n*12)],['Brut annuel (×12)',eur(b*12)],['Charges mensuelles',eur(b-n)]]))}}},
+
+{id:'budget',cat:'argent',pop:1,icon:'📊',name:'Budget mensuel',desc:'Revenus, dépenses et reste à vivre',kw:'depenses revenus epargne',
+ html:F('rev','Revenus du mois (€)','min="0"')+`<div class="two">${F('d1','Logement','min="0"')}${F('d2','Courses','min="0"')}${F('d3','Transport','min="0"')}${F('d4','Loisirs','min="0"')}</div>`+F('d5','Autres dépenses','min="0"')+`<button class="go" id="go">Calculer</button><div class="r" id="r"></div>`,
+ init(){$('#go').onclick=()=>{const rev=val('rev');if(isNaN(rev)||rev<=0)return out('r',err('Indiquez vos revenus du mois.'));
+  const dep=['d1','d2','d3','d4','d5'].reduce((s,i)=>s+(val(i)||0),0),reste=rev-dep,p=Math.max(0,Math.min(100,dep/rev*100));
+  out('r',res([['Total des dépenses',eur(dep)],['Reste à vivre',eur(reste),1],['Taux d’épargne',nb(reste/rev*100,1)+' %']])+`<div class="bar"><i style="width:${p}%"></i></div><p class="note">${nb(p,0)} % de vos revenus sont dépensés.${reste<0?' Vos dépenses dépassent vos revenus.':''}</p>`)}}},
+
+{id:'epargne',cat:'argent',icon:'🐷',name:'Objectif d’économies',desc:'Combien épargner par mois, ou en combien de temps',kw:'epargne objectif projet',
+ html:F('ob','Objectif à atteindre (€)','min="0"')+F('dj','Déjà épargné (€)','min="0"')+`<div class="two">${F('mo','Durée souhaitée (mois)','min="1"')}${F('me','OU épargne par mois (€)','min="0"')}</div><button class="go" id="go">Calculer</button><div class="r" id="r"></div><p class="note">Remplissez la durée pour obtenir la mensualité, ou la mensualité pour obtenir la durée. Sans intérêts.</p>`,
+ init(){$('#go').onclick=()=>{const ob=val('ob'),dj=val('dj')||0,mo=val('mo'),me=val('me');if(isNaN(ob)||ob<=0)return out('r',err('Indiquez un objectif.'));
+  const need=ob-dj;if(need<=0)return out('r',res([['Objectif déjà atteint 🎉','',1]]));
+  if(mo>0)return out('r',res([['Reste à épargner',eur(need)],['Épargne mensuelle',eur(need/mo),1]]));
+  if(me>0){const m=Math.ceil(need/me),d=new Date();d.setMonth(d.getMonth()+m);return out('r',res([['Reste à épargner',eur(need)],['Durée',m+' mois',1],['Objectif atteint vers',d.toLocaleDateString('fr-FR',{month:'long',year:'numeric'})]]))}
+  out('r',err('Indiquez une durée OU une épargne mensuelle.'))}}},
+
+{id:'dates',cat:'quotidien',pop:1,icon:'📆',name:'Calcul de dates',desc:'Durée entre deux dates, ajouter ou retirer des jours',kw:'jours semaines age calendrier',
+ html:`<b>Écart entre deux dates</b><div class="two" style="margin-top:8px"><label>Du<input id="d1" type="date"></label><label>Au<input id="d2" type="date"></label></div><button class="go" id="g1">Calculer</button><div class="r" id="r1"></div><hr>
+ <b>Ajouter / retirer des jours</b><div class="two" style="margin-top:8px"><label>Date de départ<input id="d3" type="date"></label>${F('n','Nombre de jours (négatif pour retirer)')}</div><button class="go" id="g2">Calculer</button><div class="r" id="r2"></div>`,
+ init(){
+  $('#g1').onclick=()=>{let a=Date.parse($('#d1').value),b=Date.parse($('#d2').value);if(isNaN(a)||isNaN(b))return out('r1',err('Choisissez deux dates.'));
+   const j=Math.round(Math.abs(b-a)/864e5);if(a>b)[a,b]=[b,a];a=new Date(a);b=new Date(b);
+   let y=b.getUTCFullYear()-a.getUTCFullYear(),m=b.getUTCMonth()-a.getUTCMonth(),d=b.getUTCDate()-a.getUTCDate();
+   if(d<0){m--;d+=new Date(Date.UTC(b.getUTCFullYear(),b.getUTCMonth(),0)).getUTCDate()}if(m<0){y--;m+=12}
+   out('r1',res([['Écart en jours',nb(j,0)+' jours',1],['Soit',nb(Math.floor(j/7),0)+' semaines et '+j%7+' jours'],['Détail',y+' an(s), '+m+' mois, '+d+' jour(s)']]))};
+  $('#g2').onclick=()=>{const a=Date.parse($('#d3').value),n=val('n');if(isNaN(a)||isNaN(n))return out('r2',err('Choisissez une date et un nombre de jours.'));
+   out('r2',res([['Date obtenue',fmtDate(new Date(a+Math.round(n)*864e5)),1]]))}}},
+
+{id:'heures',cat:'quotidien',icon:'⏱️',name:'Calcul d’heures',desc:'Durée de travail entre deux horaires, pause comprise',kw:'temps horaire travail pause',
+ html:`<div class="two"><label>Début<input id="h1" type="time"></label><label>Fin<input id="h2" type="time"></label></div>${F('p','Pause (minutes)','min="0" value="0"')}<button class="go" id="go">Calculer</button><div class="r" id="r"></div><p class="note">Si la fin est plus tôt que le début, le calcul passe minuit.</p>`,
+ init(){$('#go').onclick=()=>{const a=$('#h1').value,b=$('#h2').value,p=val('p')||0;if(!a||!b)return out('r',err('Indiquez les deux horaires.'));
+  const m=x=>+x.slice(0,2)*60+ +x.slice(3),t=((m(b)-m(a))+1440)%1440-p;if(t<0)return out('r',err('La pause est plus longue que la durée.'));
+  out('r',res([['Durée',Math.floor(t/60)+' h '+String(t%60).padStart(2,'0')+' min',1],['En heures décimales',nb(t/60,2)+' h']]))}}},
+
+{id:'conv',cat:'quotidien',pop:1,icon:'🔄',name:'Convertisseur d’unités',desc:'Longueurs, poids, volumes et températures',kw:'metre kilo litre celsius fahrenheit mile',
+ html:S('ty','Type',[['L','Longueur'],['P','Poids'],['V','Volume'],['Te','Température']])+F('v','Valeur')+`<div class="two" id="u"></div><button class="go" id="go">Convertir</button><div class="r" id="r"></div>`,
+ init(){
+  const U={L:{mm:.001,cm:.01,m:1,km:1000,pouce:.0254,pied:.3048,mile:1609.344},P:{g:.001,kg:1,tonne:1000,livre:.45359237,once:.028349523125},V:{mL:.001,L:1,'m³':1000,'gallon US':3.785411784},Te:{'°C':1,'°F':1,K:1}};
+  const fill=()=>{const k=Object.keys(U[$('#ty').value]).map(x=>`<option>${x}</option>`).join('');$('#u').innerHTML=`<label>De<select id="f">${k}</select></label><label>Vers<select id="to">${k}</select></label>`;$('#to').selectedIndex=1};
+  $('#ty').onchange=fill;fill();
+  $('#go').onclick=()=>{const v=val('v'),t=$('#ty').value,f=$('#f').value,o=$('#to').value;if(isNaN(v))return out('r',err('Entrez une valeur.'));let r;
+   if(t==='Te'){const c=f==='°C'?v:f==='°F'?(v-32)*5/9:v-273.15;if(c<-273.15)return out('r',err('Température sous le zéro absolu.'));r=o==='°C'?c:o==='°F'?c*9/5+32:c+273.15}
+   else r=v*U[t][f]/U[t][o];
+   out('r',res([[nb(v,6)+' '+f,nb(r,6)+' '+o,1]]))}}},
+
+{id:'mdp',cat:'pratique',pop:1,icon:'🔐',name:'Générateur de mot de passe',desc:'Mots de passe solides, créés sur votre appareil',kw:'securite password aleatoire',
+ html:`<label>Longueur : <b id="lv">16</b><input id="len" type="range" min="6" max="64" value="16"></label>
+ <p><label class="chk"><input type="checkbox" id="mi" checked>minuscules</label><label class="chk"><input type="checkbox" id="ma" checked>MAJUSCULES</label><label class="chk"><input type="checkbox" id="ch" checked>chiffres</label><label class="chk"><input type="checkbox" id="sy" checked>symboles</label></p>
+ <button class="go" id="go" style="margin-top:12px">Générer</button><div class="r" id="r"></div><p class="note">Le mot de passe est généré dans votre navigateur et n’est ni envoyé ni enregistré.</p>`,
+ init(){const L=$('#len');L.oninput=()=>$('#lv').textContent=L.value;
+  $('#go').onclick=()=>{const sets=[['mi','abcdefghijklmnopqrstuvwxyz'],['ma','ABCDEFGHIJKLMNOPQRSTUVWXYZ'],['ch','0123456789'],['sy','!@#$%^&*()-_=+[]{};:,.?']].filter(s=>$('#'+s[0]).checked).map(s=>s[1]);
+   if(!sets.length)return out('r',err('Cochez au moins un type de caractères.'));
+   const pool=sets.join(''),n=+L.value;let p;
+   do{p=Array.from({length:n},()=>pool[rnd(pool.length)]).join('')}while(!sets.every(s=>[...s].some(c=>p.includes(c))));
+   const e=n*Math.log2(pool.length),f=e<40?'faible':e<60?'moyenne':e<80?'forte':'très forte';
+   out('r',`<input id="pw" readonly value="${p.replace(/&/g,'&amp;').replace(/"/g,'&quot;')}" style="font-family:monospace;font-size:1.1rem;width:100%;padding:11px;border:2px solid #e5e7eb;border-radius:12px"><div class="row"><span>Robustesse</span><b>${f} (${Math.round(e)} bits)</b></div><button class="go" id="cp" style="margin-top:10px">Copier</button>`);
+   $('#cp').onclick=()=>{const i=$('#pw');i.select();(navigator.clipboard?navigator.clipboard.writeText(i.value):Promise.reject()).catch(()=>document.execCommand('copy')).finally(()=>{$('#cp').textContent='Copié ✓'})}}}},
+
+{id:'texte',cat:'pratique',icon:'📝',name:'Compteur de mots',desc:'Mots, caractères, phrases et temps de lecture',kw:'texte caracteres lecture',
+ html:`<label>Collez ou tapez votre texte<textarea id="tx" rows="6"></textarea></label><div class="r" id="r"></div><button class="go" id="cl">Effacer</button>`,
+ init(){const t=$('#tx'),run=()=>{const s=t.value,w=s.trim()?s.trim().split(/\s+/).length:0;
+   out('r',res([['Mots',nb(w,0),1],['Caractères',nb(s.length,0)],['Caractères sans espaces',nb(s.replace(/\s/g,'').length,0)],['Phrases',nb(s.split(/[.!?]+/).filter(x=>x.trim()).length,0)],['Lecture (≈ 200 mots/min)',w?Math.max(1,Math.ceil(w/200))+' min':'0 min']]))};
+  t.oninput=run;run();$('#cl').onclick=()=>{t.value='';run();t.focus()}}}
+];
+
+/* ---------- Affichage ---------- */
+const dlg=$('#dlg');
+const col=id=>C.find(c=>c.id===id).c;
+function open(title,html,color,init){$('#dt').textContent=title;$('#db').innerHTML=html;dlg.style.setProperty('--c',`var(${color})`);$('#dh').style.background=`var(${color})`;if(init)init();dlg.showModal()}
+$('#x').onclick=()=>dlg.close();
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+let cat='',q='';
+function render(){
+  const filtering=cat||q;
+  const l=T.filter(t=>(!cat||t.cat===cat)&&(!q||norm(t.name+' '+t.desc+' '+t.kw).includes(norm(q)))&&(filtering||t.pop));
+  $('#lt').textContent=!filtering?'Outils populaires':q?`Résultats pour « ${q} »`:C.find(c=>c.id===cat).name;
+  $('#reset').style.display=filtering?'inline-block':'none';
+  $('#list').innerHTML=l.length?l.map((t,i)=>`<button class="tool" data-id="${t.id}" style="--c:var(${col(t.cat)});animation-delay:${i*50}ms"><span class="ico">${t.icon}</span><b>${t.name}</b><small>${t.desc}</small><br><span class="tag">${C.find(c=>c.id===t.cat).name}</span></button>`).join(''):'<p class="empty">Aucun outil ne correspond à votre recherche.</p>';
+  document.querySelectorAll('.cat').forEach(b=>b.classList.toggle('on',b.dataset.id===cat));
+}
+$('#categories').innerHTML=C.map((c,i)=>`<button class="cat" data-id="${c.id}" style="--c:var(${c.c});animation-delay:${i*90}ms"><span class="ico">${c.icon}</span><b>${c.name}</b><small>${c.desc}</small></button>`).join('');
+$('#categories').onclick=e=>{const b=e.target.closest('.cat');if(!b)return;cat=cat===b.dataset.id?'':b.dataset.id;q='';$('#q').value='';render();$('#outils').scrollIntoView()};
+$('#list').onclick=e=>{const b=e.target.closest('.tool');if(!b)return;const t=T.find(x=>x.id===b.dataset.id);open(t.name,t.html,col(t.cat),t.init)};
+$('#q').oninput=e=>{q=e.target.value.trim();cat='';render()};
+$('#reset').onclick=()=>{cat='';q='';$('#q').value='';render()};
+
+$('#ml').onclick=()=>open('Mentions légales',`<p><b>Site :</b> MALYNO – outils gratuits en ligne.</p><p style="margin-top:8px"><b>Éditeur :</b> [à compléter : votre nom ou celui de votre structure]</p><p style="margin-top:8px"><b>Hébergement :</b> [à compléter une fois le site mis en ligne]</p><p style="margin-top:8px"><b>Données :</b> les calculs sont effectués dans votre navigateur. Aucune donnée n’est envoyée, collectée ni enregistrée.</p><p class="note">Les résultats sont fournis à titre indicatif.</p>`,'--v');
+$('#ct').onclick=()=>open('Contact',`<p>Pour toute question ou suggestion d’outil :</p><p style="margin-top:10px"><b>[à compléter : votre adresse e-mail]</b></p>`,'--o');
+
+render();
+</script>
+</body>
+</html>
